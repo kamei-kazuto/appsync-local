@@ -1,0 +1,16 @@
+service: appsync-local # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+plugins:
+  - serverless-appsync-plugin
+  - serverless-appsync-offline
+  - serverless-offline
+custom:
+  appsync-offline:
+    port: 62222
+    dynamodb:
+      server:
+        port: 8000

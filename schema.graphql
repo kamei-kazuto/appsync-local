@@ -1,0 +1,87 @@
+type User {
+  id: ID!
+  owner: String
+  nickName: String
+  photo: String
+  profile: String
+  color: String
+  url: String
+  friendList: [String]
+  followList: [String]
+}
+
+type Picture {
+  id: ID!
+  name: String
+  owner: String
+  tags: [String]
+  description: String
+  visibility: Visibility
+  file: S3Object
+  createdAt: String
+  updatedAt: String
+  likeCount: Int
+  comments: [PictureComment] @connection(name: "PictureComments")
+}
+
+type PictureComment {
+  id: ID!
+  owner: String
+  content: String
+  createdAt: String
+  updatedAt: String
+  picture: Picture @connection(name: "PictureComments")
+}
+
+type Blog {
+  id: ID!
+  title: String!
+  owner: String
+  tags: [String]
+  content: String
+  visibility: Visibility
+  createdAt: String
+  updatedAt: String
+  likeCount: Int
+  comments: [BlogComment] @connection(name: "BlogComments")
+}
+
+type BlogComment {
+  id: ID!
+  owner: String
+  content: String
+  createdAt: String
+  updatedAt: String
+  blog: Blog @connection(name: "BlogComments")
+}
+
+type Conversation {
+  id: ID!
+  owner: String
+  name: String
+  messages: [Message] @connection(name: "ConversationMessage")
+  createdAt: String
+  updatedAt: String
+  member: [String]
+}
+
+type Message {
+  id: ID!
+  owner: String
+  content: String
+  conversation: Conversation @connection(name: "ConversationMessage")
+  recieve: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+enum Visibility {
+  public
+  private
+}
